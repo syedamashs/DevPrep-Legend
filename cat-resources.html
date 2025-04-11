@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAT Resources | DevPrep-Legend</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .resource-box {
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .resource-box:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+  <div class="container py-5">
+    <h1 class="mb-4 text-center">📚 CAT Resources</h1>
+
+    <div class="row">
+      <!-- Subject list -->
+      <div class="col-md-4">
+        <div class="list-group">
+          <button class="list-group-item list-group-item-action active" data-subject="dbms">Database Management System</button>
+          <button class="list-group-item list-group-item-action" data-subject="adp">Algorithm Design Priciples</button>
+          <button class="list-group-item list-group-item-action" data-subject="cn">Computer Networks</button>
+        </div>
+      </div>
+
+      <!-- Resource display area -->
+      <div class="col-md-8">
+        <div id="resources" class="card p-4 shadow-sm bg-white">
+          <h5>Select a subject to view resources 👆</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const resources = {
+      dbms: [
+        {
+          name: "DBMS - Folder",
+          link: "https://drive.google.com/drive/folders/1EyD-v4aiaXEc5EzZ1_73ibEYEcfgOj37"
+        }
+      ],
+      adp: [],
+      cn: []
+    };
+
+    const subjectButtons = document.querySelectorAll(".list-group-item");
+    const resourceContainer = document.getElementById("resources");
+
+    subjectButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        subjectButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+
+        const subject = button.getAttribute("data-subject");
+        const data = resources[subject];
+
+        if (data.length === 0) {
+          resourceContainer.innerHTML = `<h5>No resources yet. Stay tuned! 🕒</h5>`;
+          return;
+        }
+
+        let html = `<h5 class="mb-3">${subject.toUpperCase()} Resources</h5><ul class="list-group">`;
+        data.forEach(item => {
+          html += `<li class="list-group-item">
+                     <a href="${item.link}" target="_blank">${item.name}</a>
+                   </li>`;
+        });
+        html += `</ul>`;
+        resourceContainer.innerHTML = html;
+      });
+    });
+  </script>
+
+</body>
+</html>
